@@ -17,6 +17,14 @@
     "570940": {
       "name": "Dark Souls: Remastered",
       "paths": ["{APPDATA}/DarkSoulsRemastered"]
+    },
+    "236430": {
+      "name": "Dark Souls II",
+      "paths": ["{APPDATA}/DarkSoulsII"]
+    },
+    "335300": {
+      "name": "Dark Souls II: Scholar of the First Sin",
+      "paths": ["{APPDATA}/DarkSoulsII"]
     }
   }
 }

@@ -29,7 +29,7 @@
   {
     "id": "fromsoftware-souls",
     "name": "FromSoftware Souls saves",
-    "summary": "Save-path rules for Elden Ring, Dark Souls III, Sekiro, and Dark Souls: Remastered.",
+    "summary": "Save-path rules for Elden Ring, Dark Souls III, Dark Souls II (+ Scholar of the First Sin), Sekiro, and Dark Souls: Remastered.",
     "kinds": [
       "games"
     ],
