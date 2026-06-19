@@ -1,0 +1,22 @@
+{
+  "$schema": "../schema/plugin.schema.json",
+  "name": "FromSoftware Souls saves",
+  "games": {
+    "1245620": {
+      "name": "Elden Ring",
+      "paths": ["{APPDATA}/EldenRing"]
+    },
+    "374320": {
+      "name": "Dark Souls III",
+      "paths": ["{APPDATA}/DarkSoulsIII"]
+    },
+    "814380": {
+      "name": "Sekiro: Shadows Die Twice",
+      "paths": ["{APPDATA}/Sekiro"]
+    },
+    "570940": {
+      "name": "Dark Souls: Remastered",
+      "paths": ["{APPDATA}/DarkSoulsRemastered"]
+    }
+  }
+}

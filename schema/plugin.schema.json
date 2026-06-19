@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/nickPisano/GameSync-Plugins/blob/main/schema/plugin.schema.json",
+  "title": "GameSync Plugin",
+  "description": "A GameSync community plugin. One .json file per plugin; the filename stem is the plugin id. games/emulators are pure data and always safe. viewers and hooks run arbitrary shell commands and only execute when the user enables 'allow plugins to run commands' in GameSync.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "Optional pointer to this schema for editor autocompletion."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional display name for the plugin."
+    },
+    "games": {
+      "type": "object",
+      "description": "Map of Steam appid (string) to a save-path rule.",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/gameEntry" }
+    },
+    "emulators": {
+      "type": "object",
+      "description": "Map of emulator key (string) to a save-path rule. 'name' is required for emulators.",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/emulatorEntry" }
+    },
+    "viewers": {
+      "type": "array",
+      "description": "File viewers. RUNS SHELL COMMANDS.",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/viewer" }
+    },
+    "hooks": {
+      "$ref": "#/$defs/hooks",
+      "description": "Shell commands run around backup/restore. RUNS SHELL COMMANDS."
+    }
+  },
+  "$defs": {
+    "pathTemplate": {
+      "type": "string",
+      "minLength": 1,
+      "description": "An ordered save-path template. The first path that resolves AND exists on disk wins. Allowed placeholders: {APPDATA} {LOCALAPPDATA} {DOCUMENTS} {SAVEDGAMES} {HOME} {USERPROFILE} {APPSUPPORT} {XDG_DATA} {XDG_CONFIG} {INSTALL_DIR}. Use forward slashes."
+    },
+    "gameEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["paths"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Display name. Also lets non-Steam stores (GOG/Epic) match by normalized name."
+        },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/pathTemplate" }
+        }
+      }
+    },
+    "emulatorEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "paths"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/pathTemplate" }
+        }
+      }
+    },
+    "viewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "match", "command"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "match": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Filename glob, e.g. *.sl2"
+        },
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Shell command with {file} substituted for the matched file."
+        }
+      }
+    },
+    "hooks": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pre_backup": { "$ref": "#/$defs/hookCommand" },
+        "post_backup": { "$ref": "#/$defs/hookCommand" },
+        "pre_restore": { "$ref": "#/$defs/hookCommand" },
+        "post_restore": { "$ref": "#/$defs/hookCommand" }
+      }
+    },
+    "hookCommand": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "description": "Shell command, or null to disable this hook."
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "../schema/plugin.schema.json",
+  "name": "Indie essentials saves",
+  "games": {
+    "413150": {
+      "name": "Stardew Valley",
+      "paths": [
+        "{APPDATA}/StardewValley/Saves",
+        "{XDG_CONFIG}/StardewValley/Saves",
+        "{HOME}/.config/StardewValley/Saves"
+      ]
+    },
+    "367520": {
+      "name": "Hollow Knight",
+      "paths": [
+        "{USERPROFILE}/AppData/LocalLow/Team Cherry/Hollow Knight",
+        "{APPSUPPORT}/unity.Team Cherry.Hollow Knight",
+        "{XDG_CONFIG}/unity3d/Team Cherry/Hollow Knight"
+      ]
+    },
+    "105600": {
+      "name": "Terraria",
+      "paths": [
+        "{DOCUMENTS}/My Games/Terraria",
+        "{APPSUPPORT}/Terraria",
+        "{XDG_DATA}/Terraria"
+      ]
+    },
+    "1145360": {
+      "name": "Hades",
+      "paths": [
+        "{DOCUMENTS}/Saved Games/Hades",
+        "{APPSUPPORT}/Supergiant Games/Hades"
+      ]
+    }
+  }
+}

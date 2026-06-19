@@ -1,0 +1,37 @@
+{
+  "$schema": "../schema/plugin.schema.json",
+  "name": "Survival & sandbox saves",
+  "games": {
+    "264710": {
+      "name": "Subnautica",
+      "paths": [
+        "{USERPROFILE}/AppData/LocalLow/Unknown Worlds/Subnautica/Subnautica/SavedGames",
+        "{APPSUPPORT}/unity.Unknown Worlds.Subnautica/SavedGames"
+      ]
+    },
+    "322330": {
+      "name": "Don't Starve Together",
+      "paths": [
+        "{DOCUMENTS}/Klei/DoNotStarveTogether",
+        "{APPSUPPORT}/Klei/DoNotStarveTogether",
+        "{HOME}/.klei/DoNotStarveTogether"
+      ]
+    },
+    "427520": {
+      "name": "Factorio",
+      "paths": [
+        "{APPDATA}/Factorio/saves",
+        "{APPSUPPORT}/factorio/saves",
+        "{HOME}/.factorio/saves"
+      ]
+    },
+    "294100": {
+      "name": "RimWorld",
+      "paths": [
+        "{USERPROFILE}/AppData/LocalLow/Ludeon Studios/RimWorld by Ludeon Studios/Saves",
+        "{APPSUPPORT}/RimWorld/Saves",
+        "{XDG_CONFIG}/unity3d/Ludeon Studios/RimWorld by Ludeon Studios/Saves"
+      ]
+    }
+  }
+}

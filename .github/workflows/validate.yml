@@ -1,0 +1,26 @@
+name: Validate plugins
+
+on:
+  pull_request:
+    paths:
+      - "plugins/**"
+      - "schema/**"
+      - "tools/**"
+      - ".github/workflows/validate.yml"
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate plugins & catalog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # No dependencies to install — the validator is pure Node.
+      - name: Run validator
+        run: node tools/validate.js

@@ -1,0 +1,19 @@
+{
+  "name": "gamesync-plugins",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Community catalog of plugins for GameSync, a desktop game-save backup/sync app.",
+  "license": "MIT",
+  "type": "commonjs",
+  "bin": {
+    "gamesync-validate": "tools/validate.js"
+  },
+  "scripts": {
+    "validate": "node tools/validate.js",
+    "test": "node tools/validate.js",
+    "build-index": "node tools/validate.js --write-index"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

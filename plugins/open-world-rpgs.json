@@ -1,0 +1,34 @@
+{
+  "$schema": "../schema/plugin.schema.json",
+  "name": "Open-world RPG saves",
+  "games": {
+    "292030": {
+      "name": "The Witcher 3: Wild Hunt",
+      "paths": [
+        "{DOCUMENTS}/The Witcher 3/gamesaves",
+        "{HOME}/.local/share/CD Projekt Red/The Witcher 3"
+      ]
+    },
+    "1091500": {
+      "name": "Cyberpunk 2077",
+      "paths": [
+        "{SAVEDGAMES}/CD Projekt Red/Cyberpunk 2077",
+        "{USERPROFILE}/Saved Games/CD Projekt Red/Cyberpunk 2077"
+      ]
+    },
+    "1086940": {
+      "name": "Baldur's Gate 3",
+      "paths": [
+        "{LOCALAPPDATA}/Larian Studios/Baldur's Gate 3/PlayerProfiles/Public/Savegames",
+        "{DOCUMENTS}/Larian Studios/Baldur's Gate 3/PlayerProfiles/Public/Savegames"
+      ]
+    },
+    "489830": {
+      "name": "The Elder Scrolls V: Skyrim Special Edition",
+      "paths": [
+        "{DOCUMENTS}/My Games/Skyrim Special Edition/Saves",
+        "{APPSUPPORT}/Skyrim Special Edition/Saves"
+      ]
+    }
+  }
+}

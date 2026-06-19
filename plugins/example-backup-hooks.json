@@ -1,0 +1,10 @@
+{
+  "$schema": "../schema/plugin.schema.json",
+  "name": "EXAMPLE: backup logging hooks (RUNS COMMANDS)",
+  "hooks": {
+    "pre_backup": "echo \"[GameSync] backup starting at $(date)\" >> \"$HOME/gamesync-hooks.log\"",
+    "post_backup": "echo \"[GameSync] backup finished at $(date)\" >> \"$HOME/gamesync-hooks.log\"",
+    "pre_restore": null,
+    "post_restore": null
+  }
+}

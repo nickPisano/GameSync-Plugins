@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/plugin.schema.json",
+  "name": "EXAMPLE: save-file viewer (RUNS COMMANDS)",
+  "viewers": [
+    {
+      "name": "Open .sl2 in hex editor",
+      "match": "*.sl2",
+      "command": "hexedit {file}"
+    },
+    {
+      "name": "Open emulator memory card in hex editor",
+      "match": "*.mcr",
+      "command": "hexedit {file}"
+    }
+  ]
+}

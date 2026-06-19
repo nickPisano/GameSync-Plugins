@@ -1,0 +1,65 @@
+[
+  {
+    "id": "console-emulators",
+    "name": "Console emulator saves",
+    "summary": "Memory-card / save-data paths for PCSX2, Dolphin, DuckStation, PPSSPP, and RPCS3.",
+    "kinds": [
+      "emulators"
+    ],
+    "runs_commands": false
+  },
+  {
+    "id": "example-backup-hooks",
+    "name": "EXAMPLE: backup logging hooks (RUNS COMMANDS)",
+    "summary": "Example only: appends a timestamped line to a log file before/after each backup. RUNS COMMANDS.",
+    "kinds": [
+      "hooks"
+    ],
+    "runs_commands": true
+  },
+  {
+    "id": "example-save-viewer",
+    "name": "EXAMPLE: save-file viewer (RUNS COMMANDS)",
+    "summary": "Example only: opens .sl2 and .mcr save files in a hex editor. RUNS COMMANDS.",
+    "kinds": [
+      "viewers"
+    ],
+    "runs_commands": true
+  },
+  {
+    "id": "fromsoftware-souls",
+    "name": "FromSoftware Souls saves",
+    "summary": "Save-path rules for Elden Ring, Dark Souls III, Sekiro, and Dark Souls: Remastered.",
+    "kinds": [
+      "games"
+    ],
+    "runs_commands": false
+  },
+  {
+    "id": "indie-essentials",
+    "name": "Indie essentials saves",
+    "summary": "Save-path rules for Stardew Valley, Hollow Knight, Terraria, and Hades.",
+    "kinds": [
+      "games"
+    ],
+    "runs_commands": false
+  },
+  {
+    "id": "open-world-rpgs",
+    "name": "Open-world RPG saves",
+    "summary": "Save-path rules for The Witcher 3, Cyberpunk 2077, Baldur's Gate 3, and Skyrim SE.",
+    "kinds": [
+      "games"
+    ],
+    "runs_commands": false
+  },
+  {
+    "id": "survival-sandbox",
+    "name": "Survival & sandbox saves",
+    "summary": "Save-path rules for Subnautica, Don't Starve Together, Factorio, and RimWorld.",
+    "kinds": [
+      "games"
+    ],
+    "runs_commands": false
+  }
+]

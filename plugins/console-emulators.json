@@ -1,0 +1,45 @@
+{
+  "$schema": "../schema/plugin.schema.json",
+  "name": "Console emulator saves",
+  "emulators": {
+    "pcsx2": {
+      "name": "PCSX2 (PlayStation 2)",
+      "paths": [
+        "{DOCUMENTS}/PCSX2/memcards",
+        "{XDG_CONFIG}/PCSX2/memcards",
+        "{INSTALL_DIR}/memcards"
+      ]
+    },
+    "dolphin": {
+      "name": "Dolphin (GameCube / Wii)",
+      "paths": [
+        "{DOCUMENTS}/Dolphin Emulator",
+        "{APPSUPPORT}/Dolphin",
+        "{XDG_DATA}/dolphin-emu"
+      ]
+    },
+    "duckstation": {
+      "name": "DuckStation (PlayStation 1)",
+      "paths": [
+        "{DOCUMENTS}/DuckStation/memcards",
+        "{APPSUPPORT}/DuckStation/memcards",
+        "{XDG_CONFIG}/duckstation/memcards"
+      ]
+    },
+    "ppsspp": {
+      "name": "PPSSPP (PSP)",
+      "paths": [
+        "{DOCUMENTS}/PPSSPP/PSP/SAVEDATA",
+        "{INSTALL_DIR}/memstick/PSP/SAVEDATA",
+        "{XDG_CONFIG}/ppsspp/PSP/SAVEDATA"
+      ]
+    },
+    "rpcs3": {
+      "name": "RPCS3 (PlayStation 3)",
+      "paths": [
+        "{INSTALL_DIR}/dev_hdd0/home/00000001/savedata",
+        "{XDG_CONFIG}/rpcs3/dev_hdd0/home/00000001/savedata"
+      ]
+    }
+  }
+}
