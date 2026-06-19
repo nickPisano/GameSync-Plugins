@@ -61,6 +61,22 @@ When in doubt, prefer a **data-only** plugin. If you genuinely need a command, k
 tiny, document why, and expect close scrutiny. New contributors will generally have an
 easier time landing data-only plugins than command-bearing ones.
 
+### Plugins that ship a helper script
+
+A viewer/hook may call a helper script in this repo (see
+[`tools/er-save-info.js`](tools/er-save-info.js), used by `fromsoftware-souls-viewer`).
+If you add one:
+
+- The script must live in [`tools/`](tools/) so it's reviewable in the same PR — never
+  point a command at a script that's downloaded at runtime.
+- Prefer **zero dependencies** (pure Node) and keep it **read-only** unless the feature
+  inherently requires writing. State which in a header comment.
+- Include a **test** (e.g. [`tools/test-er-save-info.js`](tools/test-er-save-info.js)).
+  If the script parses a binary format you can't ship a fixture for, construct a
+  synthetic input from the documented format and assert round-trip correctness, and
+  build in a self-check (like a checksum) so the tool fails loudly rather than emitting
+  wrong data.
+
 ## Style
 
 - Two-space indented JSON, one plugin per file.
@@ -76,6 +92,8 @@ easier time landing data-only plugins than command-bearing ones.
 | `node tools/validate.js --write-index` | Regenerate `index.json` (preserves existing summaries). |
 | `npm run validate` | Alias for the first command. |
 | `npm run build-index` | Alias for `--write-index`. |
+| `node tools/test-er-save-info.js` | Unit test for the Elden Ring save parser. |
+| `npm test` | Runs the validator and the parser test together. |
 
 By submitting a contribution you agree to license it under the repository's
 [MIT License](LICENSE).

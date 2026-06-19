@@ -10,7 +10,7 @@
   },
   "scripts": {
     "validate": "node tools/validate.js",
-    "test": "node tools/validate.js",
+    "test": "node tools/validate.js && node tools/test-er-save-info.js",
     "build-index": "node tools/validate.js --write-index"
   },
   "engines": {

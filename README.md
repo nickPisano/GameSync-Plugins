@@ -1,8 +1,8 @@
 # GameSync Plugins
 
-A community catalog of plugins for **GameSync**, a desktop game-save backup/sync app
-(Rust core + Tauri). A plugin is a single drop-in `.json` file that you place in
-GameSync's plugins folder. Plugins can:
+A community catalog of plugins for **[GameSync](https://github.com/nickPisano/GameSync)**,
+a desktop game-save backup/sync app (Rust core + Tauri). A plugin is a single drop-in
+`.json` file that you place in GameSync's plugins folder. Plugins can:
 
 - add **save-path detection rules** for games and emulators,
 - register **file viewers** for save files,
@@ -32,11 +32,14 @@ GameSync's plugins folder. Plugins can:
 | [`open-world-rpgs`](plugins/open-world-rpgs.json) | games | no |
 | [`survival-sandbox`](plugins/survival-sandbox.json) | games | no |
 | [`console-emulators`](plugins/console-emulators.json) | emulators | no |
+| [`fromsoftware-souls-viewer`](plugins/fromsoftware-souls-viewer.json) | viewers | **yes** |
 | [`example-save-viewer`](plugins/example-save-viewer.json) | viewers | **yes** |
 | [`example-backup-hooks`](plugins/example-backup-hooks.json) | hooks | **yes** |
 
 The two `example-*` plugins are **demonstrations** of command-bearing plugins. Install
-them only if you understand and want their behavior.
+them only if you understand and want their behavior. `fromsoftware-souls-viewer` is a
+real, working command-bearing plugin — see
+[Elden Ring save inspector](#elden-ring-save-inspector-runs-commands) below.
 
 ---
 
@@ -77,6 +80,55 @@ When the toggle is **off**:
 - data-only plugins work normally,
 - command-bearing plugins still contribute their data (if any), but their viewers and
   hooks are ignored.
+
+---
+
+## Elden Ring save inspector (runs commands)
+
+The [`fromsoftware-souls-viewer`](plugins/fromsoftware-souls-viewer.json) plugin
+registers a **viewer** for Elden Ring saves (`ER0000.sl2`) that prints, for each
+character slot:
+
+- character name and **level**,
+- **runes held** and **soul memory**,
+- the eight **base stats** (VIG / MND / END / STR / DEX / INT / FTH / ARC).
+
+It runs [`tools/er-save-info.js`](tools/er-save-info.js), a **zero-dependency, read-only**
+Node script (it never writes to your save). You can also run it directly without GameSync:
+
+```bash
+node tools/er-save-info.js "/path/to/ER0000.sl2"
+node tools/er-save-info.js --json "/path/to/ER0000.sl2"   # machine-readable
+```
+
+### Setup
+
+1. Have **Node.js ≥ 18** installed (`node --version`).
+2. **Enable "allow plugins to run commands"** in GameSync (viewers don't run otherwise).
+3. Edit the plugin's `command` to point at the script on your machine — replace
+   `/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/er-save-info.js` with the real path, e.g.
+   `node "/Users/you/GameSync-Plugins/tools/er-save-info.js" {file}`.
+
+### How it stays honest
+
+Each Elden Ring save slot stores an MD5 of its own contents. After decrypting a slot
+the script recomputes that MD5 and compares — if it doesn't match (wrong file, or a save
+format newer than this tool), it reports the slot as unreadable **instead of printing
+guessed numbers**.
+
+### Scope and limits
+
+- **Elden Ring PC only.** Dark Souls III and Sekiro also use `.sl2` but with a different
+  key and slot layout, so they are not supported by this script.
+- **No inventory / weapon list.** Enumerating items needs a patch-specific
+  item-id → name database, which this tool intentionally does not ship.
+- The in-save field offsets come from the community
+  [010-editor template](https://github.com/ClayAmore/EldenRingSaveTemplate); a future
+  game patch could move them (the MD5 check still prevents bad output if so).
+
+> [!TIP]
+> Back up your save before pointing any tool at it. This script only reads, but it's a
+> good habit — and GameSync is a backup app, so let it make one first.
 
 ---
 
@@ -155,6 +207,7 @@ placeholder — for Unity games that store there, use
 node tools/validate.js          # validate all plugins + check the catalog is in sync
 npm run validate                # same thing
 npm run build-index             # regenerate plugins/index.json after adding a plugin
+node tools/test-er-save-info.js # unit test for the Elden Ring save parser
 ```
 
 The validator is **zero-dependency** (pure Node ≥ 18). It checks valid JSON, only

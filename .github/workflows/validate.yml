@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: "20"
 
-      # No dependencies to install — the validator is pure Node.
+      # No dependencies to install — everything is pure Node.
       - name: Run validator
         run: node tools/validate.js
+
+      - name: Test Elden Ring save parser
+        run: node tools/test-er-save-info.js

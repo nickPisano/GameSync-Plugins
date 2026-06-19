@@ -36,6 +36,15 @@
     "runs_commands": false
   },
   {
+    "id": "fromsoftware-souls-viewer",
+    "name": "Elden Ring save inspector — level/runes/stats (RUNS COMMANDS)",
+    "summary": "Read-only viewer that runs tools/er-save-info.js to print each Elden Ring character's level, runes, soul memory, and base stats. Requires Node; edit the script path. RUNS COMMANDS.",
+    "kinds": [
+      "viewers"
+    ],
+    "runs_commands": true
+  },
+  {
     "id": "indie-essentials",
     "name": "Indie essentials saves",
     "summary": "Save-path rules for Stardew Valley, Hollow Knight, Terraria, and Hades.",

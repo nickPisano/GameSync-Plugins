@@ -1,0 +1,11 @@
+{
+  "$schema": "../schema/plugin.schema.json",
+  "name": "Elden Ring save inspector — level/runes/stats (RUNS COMMANDS)",
+  "viewers": [
+    {
+      "name": "Show Elden Ring character level / runes / base stats",
+      "match": "ER0000.sl2",
+      "command": "node \"/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/er-save-info.js\" {file}"
+    }
+  ]
+}
