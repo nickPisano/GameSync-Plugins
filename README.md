@@ -39,7 +39,7 @@ a desktop game-save backup/sync app (Rust core + Tauri). A plugin is a single dr
 The two `example-*` plugins are **demonstrations** of command-bearing plugins. Install
 them only if you understand and want their behavior. `fromsoftware-souls-viewer` is a
 real, working command-bearing plugin — see
-[Elden Ring save inspector](#elden-ring-save-inspector-runs-commands) below.
+[FromSoftware Souls save inspector](#fromsoftware-souls-save-inspector-runs-commands) below.
 
 ---
 
@@ -83,48 +83,64 @@ When the toggle is **off**:
 
 ---
 
-## Elden Ring save inspector (runs commands)
+## FromSoftware Souls save inspector (runs commands)
 
 The [`fromsoftware-souls-viewer`](plugins/fromsoftware-souls-viewer.json) plugin
-registers a **viewer** for Elden Ring saves (`ER0000.sl2`) that prints, for each
-character slot:
-
-- character name and **level**,
-- **runes held** and **soul memory**,
-- the eight **base stats** (VIG / MND / END / STR / DEX / INT / FTH / ARC).
-
-It runs [`tools/er-save-info.js`](tools/er-save-info.js), a **zero-dependency, read-only**
-Node script (it never writes to your save). You can also run it directly without GameSync:
+registers **viewers** for FromSoftware Souls saves. It runs
+[`tools/souls-save-info.js`](tools/souls-save-info.js), a **zero-dependency, read-only**
+Node script (it never writes to your save) that auto-detects the game from the save
+filename. You can also run it directly without GameSync:
 
 ```bash
-node tools/er-save-info.js "/path/to/ER0000.sl2"
-node tools/er-save-info.js --json "/path/to/ER0000.sl2"   # machine-readable
+node tools/souls-save-info.js "/path/to/ER0000.sl2"
+node tools/souls-save-info.js --json "/path/to/DS30000.sl2"   # machine-readable
+node tools/souls-save-info.js --game dsr "/path/to/save.sl2"  # force the game
 ```
+
+### What it shows per game
+
+| Game | Save file | Fields shown |
+| --- | --- | --- |
+| **Elden Ring** | `ER0000.sl2` | name, **level**, runes, soul memory, 8 base stats |
+| **Dark Souls III** | `DS30000.sl2` | name, **souls** |
+| **Dark Souls II: Scholar of the First Sin** | `DS2SOFS0000.sl2` | name, **souls**, soul memory |
+| **Dark Souls: Remastered** | `DRAKS0005.sl2` | name, **souls** |
+
+Why Elden Ring shows more: its full slot layout (level + every stat) is documented in a
+community 010-editor template and covered by a round-trip test. For DS3 / DS2 / DSR the
+only **publicly verified** field locations are the character name and the souls counters,
+so those are all the script will show — it will **not** print guessed stat/level numbers.
+If you can share a copied sample save, full stats for those games can be added safely.
+
+Not covered: **Sekiro** has no level/souls/stat system (it tracks Sen, skill points and
+attack power), and **original (pre-SOTFS) Dark Souls II** uses a different unencrypted
+format; the script detects both and says so rather than guessing. Inventory / weapon
+lists are out of scope everywhere (they need a patch-specific item database).
 
 ### Setup
 
 1. Have **Node.js ≥ 18** installed (`node --version`).
 2. **Enable "allow plugins to run commands"** in GameSync (viewers don't run otherwise).
-3. Edit the plugin's `command` to point at the script on your machine — replace
-   `/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/er-save-info.js` with the real path, e.g.
-   `node "/Users/you/GameSync-Plugins/tools/er-save-info.js" {file}`.
+3. Edit each viewer's `command` to point at the script on your machine — replace
+   `/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/souls-save-info.js` with the real path, e.g.
+   `node "/Users/you/GameSync-Plugins/tools/souls-save-info.js" {file}`.
 
 ### How it stays honest
 
-Each Elden Ring save slot stores an MD5 of its own contents. After decrypting a slot
-the script recomputes that MD5 and compares — if it doesn't match (wrong file, or a save
-format newer than this tool), it reports the slot as unreadable **instead of printing
+Every encrypted save slot stores an MD5 of its own (IV + ciphertext). After reading a
+slot the script recomputes that MD5 and compares — if it doesn't match (wrong file, or a
+save format newer than this tool), it reports the slot as unreadable **instead of printing
 guessed numbers**.
 
-### Scope and limits
+### Format references
 
-- **Elden Ring PC only.** Dark Souls III and Sekiro also use `.sl2` but with a different
-  key and slot layout, so they are not supported by this script.
-- **No inventory / weapon list.** Enumerating items needs a patch-specific
-  item-id → name database, which this tool intentionally does not ship.
-- The in-save field offsets come from the community
-  [010-editor template](https://github.com/ClayAmore/EldenRingSaveTemplate); a future
-  game patch could move them (the MD5 check still prevents bad output if so).
+AES keys and per-game framing/offsets come from working community tooling — the
+[Souls Modding Wiki](http://soulsmodding.wikidot.com/format:sl2),
+[SoulsFormats](https://github.com/JKAnderson/SoulsFormats) (BND4),
+[ClayAmore/EldenRingSaveTemplate](https://github.com/ClayAmore/EldenRingSaveTemplate)
+(Elden Ring layout), and [jtesta/souls_givifier](https://github.com/jtesta/souls_givifier)
+(DS3/DS2/DSR keys, framing, name/souls offsets). A future game patch could move offsets;
+the MD5 check still prevents bad output if so.
 
 > [!TIP]
 > Back up your save before pointing any tool at it. This script only reads, but it's a
@@ -208,6 +224,7 @@ node tools/validate.js          # validate all plugins + check the catalog is in
 npm run validate                # same thing
 npm run build-index             # regenerate plugins/index.json after adding a plugin
 node tools/test-er-save-info.js # unit test for the Elden Ring save parser
+node tools/test-souls-save-info.js # unit test for the DS3/DS2/DSR inspector
 ```
 
 The validator is **zero-dependency** (pure Node ≥ 18). It checks valid JSON, only

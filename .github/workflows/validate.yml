@@ -27,3 +27,6 @@ jobs:
 
       - name: Test Elden Ring save parser
         run: node tools/test-er-save-info.js
+
+      - name: Test multi-game Souls save inspector
+        run: node tools/test-souls-save-info.js

@@ -37,8 +37,8 @@
   },
   {
     "id": "fromsoftware-souls-viewer",
-    "name": "Elden Ring save inspector — level/runes/stats (RUNS COMMANDS)",
-    "summary": "Read-only viewer that runs tools/er-save-info.js to print each Elden Ring character's level, runes, soul memory, and base stats. Requires Node; edit the script path. RUNS COMMANDS.",
+    "name": "FromSoftware Souls save inspector (RUNS COMMANDS)",
+    "summary": "Read-only viewer that runs tools/souls-save-info.js on FromSoftware saves: full stats for Elden Ring (level/runes/soul memory/base stats) and character names + souls for Dark Souls III, DS2: Scholar of the First Sin, and Dark Souls: Remastered. Requires Node; edit the script path. RUNS COMMANDS.",
     "kinds": [
       "viewers"
     ],

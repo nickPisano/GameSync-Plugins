@@ -1,11 +1,26 @@
 {
   "$schema": "../schema/plugin.schema.json",
-  "name": "Elden Ring save inspector — level/runes/stats (RUNS COMMANDS)",
+  "name": "FromSoftware Souls save inspector (RUNS COMMANDS)",
   "viewers": [
     {
-      "name": "Show Elden Ring character level / runes / base stats",
+      "name": "Elden Ring — level / runes / soul memory / base stats",
       "match": "ER0000.sl2",
-      "command": "node \"/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/er-save-info.js\" {file}"
+      "command": "node \"/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/souls-save-info.js\" {file}"
+    },
+    {
+      "name": "Dark Souls III — character names + souls",
+      "match": "DS30000.sl2",
+      "command": "node \"/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/souls-save-info.js\" {file}"
+    },
+    {
+      "name": "Dark Souls II: Scholar of the First Sin — names + souls + soul memory",
+      "match": "DS2SOFS0000.sl2",
+      "command": "node \"/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/souls-save-info.js\" {file}"
+    },
+    {
+      "name": "Dark Souls: Remastered — character names + souls",
+      "match": "DRAKS0005.sl2",
+      "command": "node \"/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/souls-save-info.js\" {file}"
     }
   ]
 }

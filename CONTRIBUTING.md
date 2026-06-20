@@ -93,7 +93,8 @@ If you add one:
 | `npm run validate` | Alias for the first command. |
 | `npm run build-index` | Alias for `--write-index`. |
 | `node tools/test-er-save-info.js` | Unit test for the Elden Ring save parser. |
-| `npm test` | Runs the validator and the parser test together. |
+| `node tools/test-souls-save-info.js` | Unit test for the DS3/DS2/DSR save inspector. |
+| `npm test` | Runs the validator and the parser tests together. |
 
 By submitting a contribution you agree to license it under the repository's
 [MIT License](LICENSE).
