@@ -45,19 +45,27 @@ real, working command-bearing plugin — see
 
 ## Install a plugin
 
-The authoritative way to find the folder:
+> [!TIP]
+> **New to this? See the full step-by-step walkthrough in [TUTORIAL.md](TUTORIAL.md)** —
+> it covers installing, verifying, the safety toggle, and using the save inspector
+> end-to-end, with troubleshooting.
 
-> **Open GameSync → Plugins → "Open folder", then drop the `.json` file in there.**
+The quick version, straight from GameSync's UI:
 
-Restart or rescan if GameSync doesn't pick it up automatically. To remove a plugin,
-delete its `.json` file.
+1. Open **[GameSync](https://github.com/nickPisano/GameSync)** → click **Plugins** in the toolbar.
+2. Click **Open folder** → drop the `.json` file into the plugins folder.
+3. Back in GameSync, click **Reload** — the plugin appears, switched **On**. No restart needed.
+
+Toggle a plugin **Off** to disable it; delete its `.json` (then **Reload**) to remove it.
+If a file is malformed, the Plugins window lists it under *"Some plugin files could not be
+loaded"* with the parse error.
 
 ### Typical folder locations
 
-GameSync derives its data directory from
-`directories::ProjectDirs("dev", "GameSync", "GameSync")`, with the `plugins`
-subfolder inside it. You can override the data directory with the `GAMESYNC_DATA`
-environment variable (plugins then live in `$GAMESYNC_DATA/plugins`).
+The exact path is always shown at the top of the Plugins window (and the **Open folder**
+button takes you there). Under the hood GameSync uses `$GAMESYNC_DATA/plugins` if the
+`GAMESYNC_DATA` environment variable is set, otherwise the `plugins` subfolder of its
+per-OS data directory (`directories::ProjectDirs("dev", "GameSync", "GameSync")`):
 
 | OS | Plugins folder |
 | --- | --- |
@@ -124,6 +132,10 @@ lists are out of scope everywhere (they need a patch-specific item database).
 3. Edit each viewer's `command` to point at the script on your machine — replace
    `/ABSOLUTE/PATH/TO/GameSync-Plugins/tools/souls-save-info.js` with the real path, e.g.
    `node "/Users/you/GameSync-Plugins/tools/souls-save-info.js" {file}`.
+4. **Seeing the output:** this is a console script, and GameSync launches viewers detached
+   without a terminal — so run it yourself in a terminal, or have the viewer write its
+   output to a file and open that. Both recipes are in
+   [TUTORIAL.md → Step 5](TUTORIAL.md#step-5--see-the-output-important).
 
 ### How it stays honest
 
