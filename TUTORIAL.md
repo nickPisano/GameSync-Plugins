@@ -24,6 +24,63 @@ toggles, and messages are exactly what you'll see on screen.
 
 ---
 
+## Getting the plugin files
+
+Each plugin is a single `.json`. Pick whichever way suits you — you only need one.
+
+### A) Download one file from GitHub (no tools)
+
+1. Open the plugin on GitHub, e.g. [`fromsoftware-souls.json`](https://github.com/nickPisano/GameSync-Plugins/blob/main/plugins/fromsoftware-souls.json).
+2. Click the **Raw** button (top-right of the file view).
+3. Save the page with **Ctrl+S** / **Cmd+S**.
+
+> [!WARNING]
+> Some browsers add `.txt` when saving (e.g. `fromsoftware-souls.json.txt`). The file
+> **must** end in `.json` or GameSync ignores it — rename it back if needed.
+
+Then move the file into your plugins folder (use **Open folder** in Part 1) and click **Reload**.
+
+### B) Download straight into the plugins folder (terminal)
+
+Every plugin has a raw URL of the form
+`https://raw.githubusercontent.com/nickPisano/GameSync-Plugins/main/plugins/<id>.json`.
+Save it directly into your plugins folder (the exact path is shown at the top of the
+Plugins window):
+
+```bash
+# macOS
+curl -fL https://raw.githubusercontent.com/nickPisano/GameSync-Plugins/main/plugins/fromsoftware-souls.json \
+  -o ~/Library/Application\ Support/dev.GameSync.GameSync/plugins/fromsoftware-souls.json
+
+# Linux
+curl -fL https://raw.githubusercontent.com/nickPisano/GameSync-Plugins/main/plugins/fromsoftware-souls.json \
+  -o ~/.local/share/GameSync/plugins/fromsoftware-souls.json
+```
+
+```powershell
+# Windows (PowerShell)
+curl.exe -fL https://raw.githubusercontent.com/nickPisano/GameSync-Plugins/main/plugins/fromsoftware-souls.json `
+  -o "$env:APPDATA\GameSync\GameSync\data\plugins\fromsoftware-souls.json"
+```
+
+Swap `fromsoftware-souls` for any plugin id from the [catalog](README.md#browse-the-catalog),
+then click **Reload** in GameSync.
+
+### C) Get everything at once (recommended for the save inspector)
+
+Download the whole repo — click **Code → Download ZIP** on the
+[repo page](https://github.com/nickPisano/GameSync-Plugins), or:
+
+```bash
+git clone https://github.com/nickPisano/GameSync-Plugins.git
+```
+
+This gives you every plugin in `plugins/` **plus** the `tools/` scripts the save inspector
+needs (Part 4 points GameSync at `tools/souls-save-info.js`). Copy whichever
+`plugins/*.json` you want into the plugins folder.
+
+---
+
 ## The 60-second version
 
 1. In GameSync, click **Plugins** in the top toolbar.
@@ -223,6 +280,57 @@ reported as unsupported rather than guessed.
 > [!TIP]
 > Back up your save before pointing any tool at it. This script only reads, but it's a
 > good habit — and GameSync is a backup app, so let it make one first.
+
+---
+
+## Part 5 — Build your own plugin
+
+A plugin is just a JSON file you write in any text editor. Here's a complete, **safe
+data-only** one that teaches GameSync where Stardew Valley keeps its saves:
+
+```json
+{
+  "name": "My game saves",
+  "games": {
+    "413150": {
+      "name": "Stardew Valley",
+      "paths": [
+        "{APPDATA}/StardewValley/Saves",
+        "{XDG_CONFIG}/StardewValley/Saves"
+      ]
+    }
+  }
+}
+```
+
+Save it as `my-games.json`, drop it in the plugins folder, and click **Reload** — you'll
+see a `1 games · 0 emulators · …` row. To make one for *your* game:
+
+1. **Name the file.** Lowercase, ending in `.json` (e.g. `my-games.json`). The part before
+   `.json` becomes the plugin's id, so keep it unique.
+2. **Find the Steam appid.** It's the number in the store URL —
+   `store.steampowered.com/app/413150/Stardew_Valley/` → `413150`. That number is the key
+   under `games`. For non-Steam copies (GOG/Epic), the `name` field lets GameSync match by
+   name instead.
+3. **Write the save path with a placeholder** so it works on any machine and OS — e.g.
+   `{APPDATA}/...`, `{DOCUMENTS}/...`, `{SAVEDGAMES}/...`. List several `paths` if the
+   location differs per platform; **the first one that exists on disk wins**. The full
+   placeholder list is in [README.md → Path placeholders](README.md#path-placeholders).
+4. **(Optional) Editor autocomplete.** If you're editing inside a cloned copy of this repo,
+   add `"$schema": "../schema/plugin.schema.json"` as the first field for completion and
+   inline validation. It's ignored when GameSync loads the file.
+5. **Check it.** Either just drop it in and click **Reload** — GameSync reports any JSON
+   mistake in its *"could not be loaded"* panel — or, if you cloned the repo, validate
+   first:
+   ```bash
+   node tools/validate.js
+   ```
+
+Adding an emulator works the same way under an `emulators` key (there the `name` is
+required). Want a **viewer** or **hook**? Those run shell commands, so they only fire when
+**"Allow plugins to run commands"** is on — see the format details in
+[README.md](README.md#viewers--runs-commands) before writing one, and consider contributing
+it back via [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
